@@ -5,11 +5,14 @@ function TrafficAnomalies() {
   const [anomalies, setAnomalies] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const fetchAnomalies = async () => {
+  const fetchAnomalies = async (historical = false) => {
     setLoading(true);
     try {
       const response = await api.post('traffic/', {
-        point: '29.72852,-95.4686'  // Example point
+        point: '29.72852,-95.4686',  // Example point
+        historical: historical,
+        start_time: '2023-01-01T00:00:00Z',
+        end_time: '2023-12-31T23:59:59Z'
       });
       setAnomalies(response.data.anomalies);
       setLoading(false);
@@ -22,7 +25,8 @@ function TrafficAnomalies() {
   return (
     <div>
       <h1>Traffic Anomalies</h1>
-      <button onClick={fetchAnomalies}>Fetch Anomalies</button>
+      <button onClick={() => fetchAnomalies(false)}>Fetch Current Anomalies</button>
+      <button onClick={() => fetchAnomalies(true)}>Fetch Historical Anomalies</button>
       {loading && <p>Loading...</p>}
       <div>
         {anomalies.length > 0 ? (
