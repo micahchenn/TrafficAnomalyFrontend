@@ -1,0 +1,51 @@
+/* Unique styles for TrafficFlowSegments component */
+
+#unique-map-container {
+    height:80%;
+    width: 80%;
+    position: relative;
+    z-index: 1;
+    margin: 50px auto; /* Center the map on the page */
+    border: 2px solid #ccc; /* Add a border for better visibility */
+    border-radius: 10px; /* Rounded corners */
+  }
+  
+  .unique-popup-container {
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .unique-pop-up-result-header {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  
+  .unique-pop-up-result-title {
+    font-weight: bold;
+    margin-top: 5px;
+  }
+  
+  .unique-pop-up-result-traffic {
+    margin-top: 5px;
+  }
+  
+  .unique-pop-up-result-traffic.-important {
+    color: red;
+  }
+  
+  .unique-info-hint {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.9em;
+    z-index: 10;
+  }
+  
