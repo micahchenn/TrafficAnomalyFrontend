@@ -1,55 +1,100 @@
-import React, { useState } from 'react';
-import api from '../api'; // Assuming api.js is configured for axios requests
+import React, { useState, useEffect, useCallback } from 'react';
+import '../Css/WelcomePage.css';
 
-function TrafficAnomalies() {
-  const [anomalies, setAnomalies] = useState([]);
-  const [loading, setLoading] = useState(false);
+function WelcomePage() {
+  const [apiKey] = useState('YHxmvVqqSDKO2zRHV0JQZGrAHkKlZxSU'); // Replace with your actual TomTom API key
 
-  const fetchAnomalies = async (historical = false) => {
-    setLoading(true);
-    try {
-      const response = await api.post('traffic/', {
-        point: '29.72852,-95.4686',  // Example point
-        historical: historical,
-        start_time: '2023-01-01T00:00:00Z',
-        end_time: '2023-12-31T23:59:59Z'
+  const getStyle = useCallback((state) => {
+    const getTilesForEndpoint = (endpoint) => {
+      return ['a', 'b', 'c', 'd'].map((hostname) => {
+        return endpoint.replace('{cyclingHostname}', hostname);
       });
-      setAnomalies(response.data.anomalies);
-      setLoading(false);
-    } catch (error) {
-      console.error("Failed to fetch anomalies:", error);
-      setLoading(false);
-    }
+    };
+
+    const mapEndpoint = `https://{cyclingHostname}.api.tomtom.com/map/1/tile/basic/main/{z}/{x}/{y}.png?tileSize=512&key=${apiKey}`;
+    const trafficEndpoint = `https://{cyclingHostname}.api.tomtom.com/traffic/map/4/tile/flow/${state.style}/{z}/{x}/{y}.png?tileSize=512&key=${apiKey}`;
+    const labelsEndpoint = `https://{cyclingHostname}.api.tomtom.com/map/1/tile/labels/main/{z}/{x}/{y}.png?tileSize=512&key=${apiKey}`;
+
+    return {
+      version: 8,
+      sources: {
+        'raster-tiles-map': {
+          type: 'raster',
+          tiles: getTilesForEndpoint(mapEndpoint),
+          tileSize: 256
+        },
+        'raster-tiles-traffic': {
+          type: 'raster',
+          tiles: getTilesForEndpoint(trafficEndpoint),
+          tileSize: 256
+        },
+        'raster-tiles-labels': {
+          type: 'raster',
+          tiles: getTilesForEndpoint(labelsEndpoint),
+          tileSize: 256
+        }
+      },
+      layers: [
+        {
+          id: 'raster-layer-map',
+          type: 'raster',
+          source: 'raster-tiles-map'
+        },
+        {
+          id: 'raster-layer-traffic',
+          type: 'raster',
+          source: 'raster-tiles-traffic'
+        },
+        {
+          id: 'raster-layer-labels',
+          type: 'raster',
+          source: 'raster-tiles-labels'
+        }
+      ]
+    };
+  }, [apiKey]);
+
+  const initMap = useCallback(() => {
+    const state = {
+      style: 'relative0'
+    };
+
+    const map = window.tt.map({
+      key: apiKey,
+      container: 'map',
+      style: getStyle(state),
+      center: [2.340822, 48.855462],
+      zoom: 10,
+      dragPan: !isMobileOrTablet()
+    });
+
+    map.addControl(new window.tt.FullscreenControl());
+    map.addControl(new window.tt.NavigationControl());
+
+    return map;
+  }, [apiKey, getStyle]);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.1/maps/maps-web.min.js';
+    script.onload = () => {
+      if (window.tt) {
+        initMap();
+      }
+    };
+    document.head.appendChild(script);
+  }, [initMap]);
+
+  const isMobileOrTablet = () => {
+    return /Mobi|Tablet|iPad|iPhone/.test(navigator.userAgent);
   };
 
   return (
-    <div>
+    <div className="App">
       <h1>Traffic Anomalies</h1>
-      <button onClick={() => fetchAnomalies(false)}>Fetch Current Anomalies</button>
-      <button onClick={() => fetchAnomalies(true)}>Fetch Historical Anomalies</button>
-      {loading && <p>Loading...</p>}
-      <div>
-        {anomalies.length > 0 ? (
-          anomalies.map((anomaly, index) => (
-            <div key={index}>
-              <p>Current Speed: {anomaly.currentSpeed}</p>
-              <p>Threshold: {anomaly.threshold}</p>
-              <p>Confidence: {anomaly.confidence}</p>
-              <p>Road Closure: {anomaly.roadClosure ? 'Yes' : 'No'}</p>
-              <p>Coordinates:</p>
-              <ul>
-                {anomaly.location.map((coord, idx) => (
-                  <li key={idx}>{coord.latitude}, {coord.longitude}</li>
-                ))}
-              </ul>
-            </div>
-          ))
-        ) : (
-          <p>No anomalies detected.</p>
-        )}
-      </div>
+      <div id="map"></div>
     </div>
   );
 }
 
-export default TrafficAnomalies;
+export default WelcomePage;
