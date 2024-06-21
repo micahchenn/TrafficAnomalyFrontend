@@ -1,9 +1,29 @@
-.App {
-    height: 100%;
+/* WelcomePage.css */
+
+.arcadis-welcome-page {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #000;
+    color: #fff;
   }
+  
+  .arcadis-title {
+    font-size: 3em;
+    color: #ff7f00;
+    margin-bottom: 20px;
+  }
+  
+  .arcadis-map {
+    width: 80%;
+    height: 70%;
+    border: 2px solid #ff7f00;
+    border-radius: 10px;
+  }
+  
   
   #map {
     height: 80%;

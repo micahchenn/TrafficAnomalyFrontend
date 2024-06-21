@@ -2,8 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import tt from '@tomtom-international/web-sdk-maps';
 import * as ttServices from '@tomtom-international/web-sdk-services';
 import '@tomtom-international/web-sdk-maps/dist/maps.css';
-import '../Css/TrafficFlowSegments.css'; // Ensure you import your CSS file
-
+import '../Css/TrafficFlowSegments.css';
 const TrafficFlowSegments = () => {
   const mapRef = useRef(null);
 
@@ -125,21 +124,21 @@ const TrafficFlowSegments = () => {
 
     function generatePopupContent(flowSegmentData) {
       return flowSegmentData.roadClosure
-        ? '<div><div class="unique-pop-up-result-header">Road Closed</div></div>'
+        ? '<div><div class="pop-up-result-header">Road Closed</div></div>'
         : '<div>' +
-            '<div class="unique-pop-up-result-header">' + roadType[flowSegmentData.frc] + '</div>' +
-            '<div class="unique-pop-up-result-title">Average speed:</div>' +
-            '<div class="unique-pop-up-result-traffic -important">with traffic: ' +
+            '<div class="pop-up-result-header">' + roadType[flowSegmentData.frc] + '</div>' +
+            '<div class="pop-up-result-title">Average speed:</div>' +
+            '<div class="pop-up-result-traffic -important">with traffic: ' +
               formatters.convertToSpeedFormat(flowSegmentData.currentSpeed, units[unitValue]) +
             '</div>' +
-            '<div class="unique-pop-up-result-traffic">w/o traffic: ' +
+            '<div class="pop-up-result-traffic">w/o traffic: ' +
               formatters.convertToSpeedFormat(flowSegmentData.freeFlowSpeed, units[unitValue]) +
             '</div>' +
-            '<div class="unique-pop-up-result-title">Travel time:</div>' +
-            '<div class="unique-pop-up-result-traffic -important">with traffic: ' +
+            '<div class="pop-up-result-title">Travel time:</div>' +
+            '<div class="pop-up-result-traffic -important">with traffic: ' +
               formatters.formatToDurationTimeString(flowSegmentData.currentTravelTime) +
             '</div>' +
-            '<div class="unique-pop-up-result-traffic">w/o traffic: ' +
+            '<div class="pop-up-result-traffic">w/o traffic: ' +
               formatters.formatToDurationTimeString(flowSegmentData.freeFlowTravelTime) +
             '</div>' +
           '</div>';
@@ -229,8 +228,8 @@ const TrafficFlowSegments = () => {
     function showPopup(text) {
       return new tt.Popup()
         .setLngLat(popupPosition)
-        .setHTML('<div class="unique-popup-container">' +
-          '<div class="unique-pop-up-content">' +
+        .setHTML('<div class="tt-pop-up-container">' +
+          '<div class="pop-up-content">' +
           text +
           '</div>' +
           '</div>')
@@ -238,7 +237,7 @@ const TrafficFlowSegments = () => {
     }
   }, []);
 
-  return <div id="unique-map-container" ref={mapRef} ></div>;
+  return <div id="map" ref={mapRef}></div>;
 };
 
 export default TrafficFlowSegments;

@@ -90,9 +90,9 @@ function WelcomePage() {
   };
 
   return (
-    <div className="App">
-      <h1>Traffic Anomalies</h1>
-      <div id="map"></div>
+    <div className="arcadis-welcome-page">
+      <h1 className="arcadis-title">Traffic Raster View</h1>
+      <div id="map" className="arcadis-map"></div>
     </div>
   );
 }

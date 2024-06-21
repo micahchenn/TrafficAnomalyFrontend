@@ -1,0 +1,101 @@
+/* HomeScreen.css */
+
+.arcadis-home-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    background-color: #000;
+  }
+  
+  .arcadis-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #000;
+    border-bottom: 2px solid #ff7f00;
+  }
+  
+  .arcadis-logo-title {
+    display: flex;
+    align-items: center;
+  }
+  
+  .arcadis-logo {
+    height: 50px;
+    margin-right: 20px;
+  }
+  
+  .arcadis-header h1 {
+    font-size: 1.5em;
+    color: #ff7f00;
+  }
+  
+  .arcadis-products {
+    display: flex;
+  }
+  
+  .arcadis-hover-element {
+    color: #ff7f00;
+    margin-left: 20px;
+    text-decoration: none;
+    font-size: 1.2em;
+    transition: color 0.3s ease;
+  }
+  
+  .arcadis-hover-element:hover {
+    color: #ffa500;
+  }
+  
+  .arcadis-home-screen-content {
+    max-width: 600px;
+    padding: 20px;
+    border: 2px solid #ff7f00;
+    border-radius: 10px;
+    background-color: rgba(255, 127, 0, 0.1);
+  }
+  
+  .arcadis-home-screen-title {
+    font-size: 3em;
+    color: #ff7f00;
+    margin-bottom: 20px;
+  }
+  
+  .arcadis-home-screen-description {
+    font-size: 1.2em;
+    color: white;
+    margin-bottom: 30px;
+  }
+  
+  .arcadis-home-screen-buttons {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .arcadis-home-screen-button {
+    background-color: #ff7f00;
+    color: #000;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .arcadis-home-screen-button:hover {
+    background-color: #ffa500;
+    transform: scale(1.05);
+  }
+  
+  .arcadis-home-screen-button:active {
+    background-color: #e67300;
+  }
+  
